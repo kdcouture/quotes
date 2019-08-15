@@ -21,11 +21,11 @@ public class Quotes
         this.text = text;
     }
 
-    public static String readFromFile() throws Exception
+    public static String readFromFile(String path) throws Exception
     {
         Gson gson = new Gson();
 
-        BufferedReader file = new BufferedReader(new FileReader("./src/main/resources/recentquotes.json"));
+        BufferedReader file = new BufferedReader(new FileReader(path));
         Quotes[] quotesFromFiles = gson.fromJson(file, Quotes[].class);
 
         int randomIndex = (int)(Math.random() * quotesFromFiles.length);

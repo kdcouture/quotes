@@ -7,11 +7,11 @@ public class App {
 
     public static void main(String[] args)
     {
+        String path = "./src/main/resources/recentquotes.json";
 
         try
         {
-
-            System.out.println(Quotes.readFromFile());
+            System.out.println(Quotes.readFromFile(path));
 
         }
         catch (Exception error)
