@@ -4,11 +4,24 @@
 package quotes;
 
 public class App {
-    public String getGreeting() {
-        return "Hello world.";
-    }
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+    public static void main(String[] args)
+    {
+
+//        show random popular book quotes.
+//        Your program should use GSON to parse the .json file.
+//        showing the quote and the author when it is run.
+//        The app should choose one quote each time it is run.
+
+        try
+        {
+            Quotes.readFromFile();
+
+        }
+        catch (Exception error)
+        {
+            System.err.println(error);
+        }
+
     }
 }
