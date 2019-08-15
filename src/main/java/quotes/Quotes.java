@@ -1,6 +1,7 @@
 package quotes;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.Scanner;
 import com.google.gson.Gson;
 
@@ -24,48 +25,22 @@ public class Quotes
     {
         Gson gson = new Gson();
 
+        BufferedReader file = new BufferedReader(new FileReader("./src/main/resources/recentquotes.json"));
+        Quotes[] quotesFromFiles = gson.fromJson(file, Quotes[].class);
 
-        Scanner reader = new Scanner(new File("./src/main/resources/recentquotes.json"));
-        String dataString = reader.nextLine();
-        System.out.println(dataString);
+        int randomIndex = (int)(Math.random() * quotesFromFiles.length);
+        String randomQuote = quotesFromFiles[randomIndex].toString();
 
-
-
-        StringBuilder stringBuilder = new StringBuilder();
-
-        reader.nextLine();
-
-        Quotes randomQuoteFromFile = null;
-
-        while (reader.hasNext())
-        {
-            String temporary = reader.nextLine();
-            if (temporary.trim().equals(" },"))
-            {
-                stringBuilder.append("}");
-                System.out.println(stringBuilder.toString());
-                randomQuoteFromFile = gson.fromJson(stringBuilder.toString(), Quotes.class);
-            }
-            System.out.println(stringBuilder.toString());
-
-        }
-
-        System.out.println(randomQuoteFromFile);
-
-        try
-        {
-
-        }
-        catch (Exception error)
-        {
-            System.err.println(error);
-        }
-
-
-
-        return "";
+        return randomQuote;
     }
 
+    @Override
+    public String toString()
+    {
+        String outputMessage = this.text + this.author;
+
+        return outputMessage;
+    }
 
 
 }

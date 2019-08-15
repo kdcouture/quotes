@@ -8,14 +8,10 @@ public class App {
     public static void main(String[] args)
     {
 
-//        show random popular book quotes.
-//        Your program should use GSON to parse the .json file.
-//        showing the quote and the author when it is run.
-//        The app should choose one quote each time it is run.
-
         try
         {
-            Quotes.readFromFile();
+
+            System.out.println(Quotes.readFromFile());
 
         }
         catch (Exception error)
