@@ -7,8 +7,20 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class AppTest {
-    @Test public void testAppHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull("app should have a greeting", classUnderTest.getGreeting());
+
+    String path = "./src/main/resources/testFile.json";
+
+    @Test
+    public void testReadFromFile()
+    {
+        try
+        {
+            assertEquals("Method should return the targeted quote and author from the test file.",
+                    " “I am good, but not an angel. I do sin, but I am not the devil. I am just a small girl in a big world trying to find someone to love.” Marilyn Monroe",
+                    Quotes.readFromFile(path));
+        } catch (Exception error)
+        {
+            fail();
+        }
     }
 }

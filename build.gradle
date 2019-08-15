@@ -24,8 +24,12 @@ dependencies {
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:27.1-jre'
 
+    // Used to import GSON reading
+    implementation 'com.google.code.gson:gson:2.8.5'
+
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
+
 }
 
 application {

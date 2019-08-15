@@ -4,11 +4,20 @@
 package quotes;
 
 public class App {
-    public String getGreeting() {
-        return "Hello world.";
-    }
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+    public static void main(String[] args)
+    {
+        String path = "./src/main/resources/recentquotes.json";
+
+        try
+        {
+            System.out.println(Quotes.readFromFile(path));
+
+        }
+        catch (Exception error)
+        {
+            System.err.println(error);
+        }
+
     }
 }
