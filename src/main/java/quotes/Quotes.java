@@ -37,7 +37,7 @@ public class Quotes
     @Override
     public String toString()
     {
-        String outputMessage = this.text + this.author;
+        String outputMessage = "Written by: " + this.author + " - " + this.text;
 
         return outputMessage;
     }
