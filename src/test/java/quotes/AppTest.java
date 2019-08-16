@@ -4,22 +4,83 @@
 package quotes;
 
 import org.junit.Test;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import com.google.gson.Gson;
+
 import static org.junit.Assert.*;
 
 public class AppTest {
 
     String path = "./src/main/resources/testFile.json";
-
+    String url = "https://ron-swanson-quotes.herokuapp.com/v2/quotes";
     @Test
     public void testReadFromFile()
     {
         try
         {
+            Quotes testQuote[] = {new Quotes(" “I am good, but not an angel. I do sin, but I am not the devil. I am just a small girl in a big world trying to find someone to love.”", "Marilyn Monroe")};
+            Gson gson = new Gson();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(gson.toJson(testQuote));
+            writer.close();
             assertEquals("Method should return the targeted quote and author from the test file.",
-                    " “I am good, but not an angel. I do sin, but I am not the devil. I am just a small girl in a big world trying to find someone to love.” Marilyn Monroe",
-                    Quotes.readFromFile(path));
+                    " “I am good, but not an angel. I do sin, but I am not the devil. I am just a small girl in a big world trying to find someone to love.” - Marilyn Monroe",
+                    Quotes.readFromFile(path).toString());
         } catch (Exception error)
         {
+            fail();
+        }
+    }
+
+    @Test public void testReadFromAPISafe(){
+        try
+        {
+            assertEquals("Author must be Ron Swanson","Ron Swanson",Quotes.readFromInternet(url, path).author);
+        } catch (Exception error)
+        {
+            fail();
+        }
+    }
+
+    @Test public void testReadFromAPIOffLine(){
+        Quotes quote = null;
+        try
+        {
+            Quotes testQuote[] = {new Quotes(" “I am good, but not an angel. I do sin, but I am not the devil. I am just a small girl in a big world trying to find someone to love.”", "Marilyn Monroe")};
+            Gson gson = new Gson();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(gson.toJson(testQuote));
+            writer.close();
+            quote = Quotes.readFromInternet("", path);
+            assertEquals("Method should return the targeted quote and author from the test file.",
+                    " “I am good, but not an angel. I do sin, but I am not the devil. I am just a small girl in a big world trying to find someone to love.” - Marilyn Monroe",
+                    Quotes.readFromInternet("", path).toString());
+        } catch (Exception error)
+        {
+            assertEquals("Method should return the targeted quote and author from the test file.",
+                    "2------2 “I am good, but not an angel. I do sin, but I am not the devil. I am just a small girl in a big world trying to find someone to love.” - Marilyn Monroe",
+                    Quotes.readFromInternet("", path).toString());
+        }
+    }
+
+    @Test public void testStatusCode() {
+        assertEquals("Should be a good site", 200, Quotes.getRonQuoteStatus("https://ron-swanson-quotes.herokuapp.com/v2/quotes"));
+    }
+
+    @Test public void testAddToFile() {
+        Quotes quote = null;
+        try {
+            Quotes testQuote[] = {new Quotes(" “I am good, but not an angel. I do sin, but I am not the devil. I am just a small girl in a big world trying to find someone to love.”", "Marilyn Monroe")};
+            Gson gson = new Gson();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(gson.toJson(testQuote));
+            writer.close();
+            Quotes.readFromInternet(url,path);
+            assertEquals("Should be 2", 2, Quotes.getListFromFile(path).size());
+        }
+        catch (Exception e) {
             fail();
         }
     }
