@@ -60,12 +60,28 @@ public class AppTest {
         } catch (Exception error)
         {
             assertEquals("Method should return the targeted quote and author from the test file.",
-                    "2 “I am good, but not an angel. I do sin, but I am not the devil. I am just a small girl in a big world trying to find someone to love.” - Marilyn Monroe",
+                    "2------2 “I am good, but not an angel. I do sin, but I am not the devil. I am just a small girl in a big world trying to find someone to love.” - Marilyn Monroe",
                     Quotes.readFromInternet("", path).toString());
         }
     }
 
     @Test public void testStatusCode() {
         assertEquals("Should be a good site", 200, Quotes.getRonQuoteStatus("https://ron-swanson-quotes.herokuapp.com/v2/quotes"));
+    }
+
+    @Test public void testAddToFile() {
+        Quotes quote = null;
+        try {
+            Quotes testQuote[] = {new Quotes(" “I am good, but not an angel. I do sin, but I am not the devil. I am just a small girl in a big world trying to find someone to love.”", "Marilyn Monroe")};
+            Gson gson = new Gson();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+            writer.write(gson.toJson(testQuote));
+            writer.close();
+            Quotes.readFromInternet(url,path);
+            assertEquals("Should be 2", 2, Quotes.getListFromFile(path).size());
+        }
+        catch (Exception e) {
+            fail();
+        }
     }
 }

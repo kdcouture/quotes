@@ -113,6 +113,16 @@ public class Quotes
         return outputMessage;
     }
 
+    public static ArrayList<Quotes> getListFromFile(String path) throws Exception{
+        Gson gson = new Gson();
+
+        BufferedReader file = new BufferedReader(new FileReader(path));
+
+        TypeToken<ArrayList<Quotes>> token = new TypeToken<ArrayList<Quotes>>(){};
+        ArrayList<Quotes> quotesFromFiles = gson.fromJson(file, token.getType());
+        return quotesFromFiles;
+    }
+
     public static int getRonQuoteStatus(String inURL) {
         int statusCode = -1;
         try {
