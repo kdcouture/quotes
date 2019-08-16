@@ -109,7 +109,6 @@ public class Quotes
     public String toString()
     {
         String outputMessage = this.text + " - " + this.author;
-
         return outputMessage;
     }
 
